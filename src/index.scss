@@ -103,6 +103,8 @@ input {
   z-index: 1;
 }
 .drawer {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   width: 420px;
   height: 100%;
@@ -112,10 +114,10 @@ input {
   padding: 30px;
   overflow: hidden;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
+
 
   .items{
+    flex: 1;
     overflow: auto;
     margin-bottom: 40px;
   }
