@@ -11,11 +11,11 @@ function Header() {
 
       <ul className="headerRight d-flex align-center">
         <li className="mr-30 ">
-          <img width={18} height={18} src="/img/card.svg" />
+          <img width={18} height={18} src="/img/card.svg" alt=""/>
           <span>1205 руб.</span>
         </li>
         <li>
-          <img width={18} height={18} src="/img/user.svg" />
+          <img width={18} height={18} src="/img/user.svg" alt=""/>
         </li>
       </ul>
     </header>
