@@ -31,7 +31,7 @@ export const App = () => {
   return (
     <div className="wrapper clear">
       {cartOpened && <Drawer onCloseCart={() => setCartOpened(false)}/> }
-      <Header onClickCart={() => setCartOpened(true)} onCloseCart={() => (false)} />
+      <Header onClickCart={() => setCartOpened(true)} onCloseCart={() => setCartOpened(false)} />
       <div className="content p-40">
         <div className="d-flex align-center mb-40 justify-between">
           <h1 className="">Все кроссовки</h1>
@@ -42,7 +42,7 @@ export const App = () => {
         </div>
 
         <div className="sneakers d-flex">
-          {arr.map(({obj}) => {
+          {arr.map((obj) => {
             return (
               <Card
                 title={obj.title}
