@@ -1,5 +1,5 @@
-import Drawer from "./components/Drawer";
-import Header from "./components/Header";
+import {Drawer} from "./components/Drawer";
+import {Header} from "./components/Header";
 import { Card } from "./components/Card";
 import { useState } from "react";
 
@@ -26,7 +26,7 @@ const arr = [
   },
 ];
 
-function App() {
+export const App = () => {
   const [cartOpened, setCartOpened] = useState(false);
   return (
     <div className="wrapper clear">
@@ -42,7 +42,7 @@ function App() {
         </div>
 
         <div className="sneakers d-flex">
-          {arr.map((obj) => {
+          {arr.map(({obj}) => {
             return (
               <Card
                 title={obj.title}
@@ -59,4 +59,4 @@ function App() {
   );
 }
 
-export default App;
+

@@ -1,10 +1,10 @@
-function Drawer(props) {
+export const Drawer = ({onCloseCart})=> {
   return (
     <div  className="overlay">
       <div className="drawer">
         <h2 className="d-flex justify-between mb-30">
           Корзина
-          <img onClick={props.onCloseCart}
+          <img onClick={onCloseCart}
             className="removeBtn cu-p "
             src="img/sneakers/btn-remove.svg"
             alt="remove"
@@ -78,4 +78,3 @@ function Drawer(props) {
   );
 }
 
-export default Drawer;

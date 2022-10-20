@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import styles from "./Card.module.scss";
 
-export const Card = (props) => {
+export const Card = ({onFavorite, imageUrl, title, price}) => {
   const [isAdded, setIsAdded] = useState(false);
 
   const onClickPlus = () => {
@@ -15,15 +15,15 @@ export const Card = (props) => {
   useEffect(()=>console.log('Принт'), [isAdded])
   return (
     <div className={styles.card}>
-      <div className="favorite" onClick={props.onFavorite}>
+      <div className="favorite" onClick={onFavorite}>
         <img className="heart-unliked" style={{height: "40px", width: "40px" }} src="/img/heart-unliked.svg" alt="Plus" />
       </div>
-      <img style={{height: "112px", width: "133px"}} src={props.imageUrl} alt="sneak" />  
-      <h5>{props.title}</h5>
+      <img style={{height: "112px", width: "133px"}} src={imageUrl} alt="sneak" />  
+      <h5>{title}</h5>
       <div className="d-flex justify-between align-center">
         <div className="d-flex flex-column">
           <span>Цена:</span>
-          <b>{props.price}</b>
+          <b>{price}</b>
         </div>
           <img className={styles.plus} onClick={onClickPlus} src={isAdded ? '/img/btn-checked.svg':  '/img/btn-plus.svg'} alt="Plus" />
       </div>
