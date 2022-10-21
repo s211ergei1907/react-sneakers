@@ -1,61 +1,36 @@
-export const Drawer = ({onCloseCart})=> {
+export const Drawer = ({ onCloseCart, items = [] }) => {
   return (
-    <div  className="overlay">
+    <div className="overlay">
       <div className="drawer">
         <h2 className="d-flex justify-between mb-30">
           Корзина
-          <img onClick={onCloseCart}
+          <img
+            onClick={onCloseCart}
             className="removeBtn cu-p "
             src="img/sneakers/btn-remove.svg"
             alt="remove"
           />
         </h2>
+        {/* //url(${obj.imageUrl}) */}
         <div className="items">
-          <div className="cartItem d-flex align-center">
-            <img
-              className="mr-20"
-              width={70}
-              height={70}
-              src="img/sneakers/1.jpg"
-              alt="sneakers"
-            />
-            <div
-              style={{ backgroundImage: "url(/img/sneakers/1.jpg)" }}
-              className="cardItemImg"
-            ></div>
-            <div className="mr-20">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <b>12 999р</b>
+          {items.map((obj) => (
+            <div className="cartItem d-flex align-center">
+              <div className="cardItemImg">
+                <img style={{height: "70px", width: "70px"}} src={obj.imageUrl} alt="sneak" />  
+              </div>
+              <div className="mr-20 flex">
+                <p className="mb-5">{obj.title}</p>
+                <b>{obj.price}</b>
+              </div>
+              <img
+                className="removeBtn"
+                src="img/sneakers/btn-remove.svg"
+                alt="remove"
+              />
             </div>
-            <img
-              className="removeBtn"
-              src="img/sneakers/btn-remove.svg"
-              alt="remove"
-            />
-          </div>
-          <div className="cartItem d-flex align-center">
-            <img
-              className="mr-20"
-              width={70}
-              height={70}
-              src="img/sneakers/1.jpg"
-              alt="sneakers"
-            />
-            <div
-              style={{ backgroundImage: "url(/img/sneakers/1.jpg)" }}
-              className="cardItemImg"
-            ></div>
-            <div className="mr-20">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <b>12 999р</b>
-            </div>
-            <img
-              className="removeBtn"
-              src="img/sneakers/btn-remove.svg"
-              alt="remove"
-            />
-          </div>
+          ))}
         </div>
+
         <div className="cartTotalBlock">
           <ul>
             <li className="d-flex">
@@ -76,5 +51,4 @@ export const Drawer = ({onCloseCart})=> {
       </div>
     </div>
   );
-}
-
+};

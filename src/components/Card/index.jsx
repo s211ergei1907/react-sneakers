@@ -1,18 +1,19 @@
 // !1::22 4 видос 
 
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./Card.module.scss";
 
-export const Card = ({onFavorite, imageUrl, title, price}) => {
+export const Card = ({onFavorite, onPlus, imageUrl, title, price}) => {
   const [isAdded, setIsAdded] = useState(false);
 
   const onClickPlus = () => {
+    onPlus( {imageUrl, title, price});
     //Есть true будет false, если false будет true
     setIsAdded(!isAdded);
   } 
   //Если переменная изменится, то выполняется код
-  useEffect(()=>console.log('Принт'), [isAdded])
+  // useEffect(()=>console.log('Принт'), [isAdded])
   return (
     <div className={styles.card}>
       <div className="favorite" onClick={onFavorite}>
