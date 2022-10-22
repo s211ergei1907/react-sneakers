@@ -1,6 +1,5 @@
 // !1::22 4 видос 
 
-
 import { useState } from "react";
 import styles from "./Card.module.scss";
 

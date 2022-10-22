@@ -2,53 +2,63 @@ import { Drawer } from "./components/Drawer";
 import { Header } from "./components/Header";
 import { Card } from "./components/Card";
 import { useState, useEffect } from "react";
+
 //4 урок пересмотреть
 export const App = () => {
   const [items, setItems] = useState([]);
-  const [сartItems, setCartItems] = useState([
- 
-  ]);
+  const [сartItems, setCartItems] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
-  useEffect(() => {                                            //useEffect нужен в данной ситуации из-за того что функция будет вызываться  большое кол-во раз(запрос на сервер будет отправляться много раз)
-    fetch("https://6351b3109d64d7c71306ec79.mockapi.io/items") // Чтобы это избежать, мы будем вызывать fetch только при первом рендере
-      .then((res) => {                                         //fetch отправь запрос на бэк
-        return res.json();                                     // Преврати мне ответ в json   
-      })
-      .then((json) => {                                       // вытащи его из переменной json
-        setItems(json);                                       // Пердай его в useStates в items
-      });
+  useEffect(() => {
+    const getDataFromOnServer = async () => {
+      const result = await fetch(
+        "https://6351b3109d64d7c71306ec79.mockapi.io/items"
+      );
+      const data = await result.json();
+      setItems(data);
+    };
+
+    getDataFromOnServer();
   }, []);
 
-  const onAddToCart = (obj) => {
-    setCartItems(prev => [...prev, obj]);                        // Означает, что мы добавляем obj в конец  cartItems (в реакт нельзя пушить методом push, могут быть проблемы)
-  }
+  const onAddToCart = (sneakers) => {
+    setCartItems((prev) => [...prev, sneakers]); 
+  };
 
+  const onChangeSearchInput = (event) => {
+    setSearchValue(event.target.value);
+  }
   return (
     <div className="wrapper clear">
-      {cartOpened && <Drawer items = {сartItems} onCloseCart={() => setCartOpened(false)} />}
+      {cartOpened && (
+        <Drawer items={сartItems} onCloseCart={() => setCartOpened(false) } />
+      )}
+
       <Header
         onClickCart={() => setCartOpened(true)}
         onCloseCart={() => setCartOpened(false)}
       />
+
       <div className="content p-40">
         <div className="d-flex align-center mb-40 justify-between">
-          <h1 className="">Все кроссовки</h1>
+          <h1 className="">{searchValue ?  `Ищем:  ${searchValue}` : 'Все кроссовки'}</h1>
           <div className="searh-block d-flex">
             <img src="img/search.svg" alt="search" />
-            <input type="text" placeholder="Поиск" />
+            <input onChange={onChangeSearchInput} type="text" placeholder="Поиск" />
           </div>
         </div>
 
         <div className="sneakers d-flex flex-wrap">
-          {items.map((item) => {
+          {items.map(({ title, price, imageUrl }, index) => {
             return (
               <Card
-                title={item.title}
-                price={item.price}
-                imageUrl={item.imageUrl}
+                key={index}
+                title={title}
+                price={price}
+                imageUrl={imageUrl}
                 onFavorite={() => console.log("Добавили закладки")}
-                onPlus={(obj) => onAddToCart(obj)}
+                onPlus={(sneaker) => onAddToCart(sneaker)}
               />
             );
           })}

@@ -1,4 +1,4 @@
-export const Drawer = ({ onCloseCart, items = [] }) => {
+export const Drawer = ({ onCloseCart, items = []}, productDelete) => {
   return (
     <div className="overlay">
       <div className="drawer">
@@ -13,16 +13,19 @@ export const Drawer = ({ onCloseCart, items = [] }) => {
         </h2>
         {/* //url(${obj.imageUrl}) */}
         <div className="items">
-          {items.map((obj) => (
+
+          {items.map(({imageUrl, title, price}) => (
+
             <div className="cartItem d-flex align-center">
               <div className="cardItemImg">
-                <img style={{height: "70px", width: "70px"}} src={obj.imageUrl} alt="sneak" />  
+                <img style={{height: "70px", width: "70px"}} src={imageUrl} alt="sneak" />  
               </div>
               <div className="mr-20 flex">
-                <p className="mb-5">{obj.title}</p>
-                <b>{obj.price}</b>
+                <p className="mb-5">{title}</p>
+                <b>{price}</b>
               </div>
               <img
+                onClick={productDelete}
                 className="removeBtn"
                 src="img/sneakers/btn-remove.svg"
                 alt="remove"

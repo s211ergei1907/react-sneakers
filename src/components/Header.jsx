@@ -11,7 +11,7 @@ export const Header = ({onClickCart}) => {
 
       <ul className="headerRight d-flex align-center">
         <li onClick={onClickCart} className="mr-30 cu-p">
-          <img width={18} height={18} src="/img/card.svg" alt=""/>
+          <img style={{ width: "18px", height: "18px"}} src="/img/card.svg" alt=""/>
           <span>1205 руб.</span>
         </li>
         <li>
