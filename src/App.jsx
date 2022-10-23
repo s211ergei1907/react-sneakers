@@ -7,6 +7,7 @@ import { fetchApi } from "./fetchApi/fetchApi";
 export const App = () => {
   const [items, setItems] = useState([]);
   const [сartItems, setCartItems] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -16,23 +17,42 @@ export const App = () => {
         "items"
       );
       setItems(result.data);
+
+      const cart = await fetchApi.get(
+        "cart"
+      );
+      setCartItems(cart.data);
     };
 
     getDataFromOnServer();
   }, []);
 
-  const onAddToCart = (sneakers) => {
+
+
+  const onAddToCart = async (sneakers) => {
+    await fetchApi.post("cart", sneakers);
     setCartItems((prev) => [...prev, sneakers]);
+  };
+
+  const onRemoveItem = async (id) => {
+    console.log(id);
+    await fetchApi.delete(`cart/${id}`);
+    setCartItems((prev) => [...prev.filter(item => item.id !== id)]);
   };
 
   const onChangeSearchInput = (event) => {
     setSearchValue(event.target.value);
   };
 
+  const onAddToFavorite = async (sneakers) => {
+    await fetchApi.post("favorites", sneakers);
+    setFavorites((prev) => [...prev, sneakers]);
+  }
+
   return (
     <div className="wrapper clear">
-      {cartOpened && (
-        <Drawer items={сartItems} onCloseCart={() => setCartOpened(false)} />
+      {cartOpened && ( 
+        <Drawer items={сartItems} onCloseCart={() => setCartOpened(false)} onRemove={onRemoveItem} />
       )}
 
       <Header
@@ -68,6 +88,7 @@ export const App = () => {
             title.toLowerCase().includes(searchValue.toLowerCase())
           )}
           onAddToCart={onAddToCart}
+          onAddToFavorite={onAddToFavorite}
         />
       </div>
     </div>

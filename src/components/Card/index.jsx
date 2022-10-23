@@ -1,22 +1,28 @@
-// !1::22 4 видос 
+// !1::41 5 видос 
 
 import { useState } from "react";
 import styles from "./Card.module.scss";
 
 export const Card = ({onFavorite, onPlus, imageUrl, title, price}) => {
   const [isAdded, setIsAdded] = useState(false);
-
+  const [isFavorite, setIsFavorite] = useState(false)
   const onClickPlus = () => {
     onPlus( {imageUrl, title, price});
     //Есть true будет false, если false будет true
     setIsAdded(!isAdded);
   } 
+
+  const onClickFavorite = () => {
+    onFavorite({imageUrl, title, price});
+    setIsFavorite(!isFavorite);
+  } 
+
   //Если переменная изменится, то выполняется код
   // useEffect(()=>console.log('Принт'), [isAdded])
   return (
     <div className={styles.card}>
       <div className="favorite" onClick={onFavorite}>
-        <img className="heart-unliked" style={{height: "40px", width: "40px" }} src="/img/heart-unliked.svg" alt="Plus" />
+        <img onClick={onClickFavorite} className="heart-unliked" style={{height: "40px", width: "40px" }} src={isFavorite ? '/img/heart-liked.svg ' : '/img/heart-unliked.svg' } alt="Plus" />
       </div>
       <img style={{height: "112px", width: "133px"}} src={imageUrl} alt="sneak" />  
       <h5>{title}</h5>
