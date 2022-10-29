@@ -22,6 +22,9 @@ export const App = () => {
 
       const cart = await fetchApi.get("cart");
       setCartItems(cart.data);
+
+      const favorites = await fetchApi.get("favorites");
+      setFavorites(favorites.data);
     };
 
     getDataFromOnServer();
@@ -33,7 +36,6 @@ export const App = () => {
   };
 
   const onRemoveItem = async (id) => {
-    console.log(id);
     await fetchApi.delete(`cart/${id}`);
     setCartItems((prev) => [...prev.filter((item) => item.id !== id)]);
   };
@@ -57,25 +59,30 @@ export const App = () => {
         />
       )}
 
-      <Header
+      <Header sneakers={сartItems}
         onClickCart={() => setCartOpened(true)}
-        onCloseCart={() => setCartOpened(false)}
+        
       />
 
       <Routes>
-        <Route path="/f" element={<App />}></Route>
+        <Route
+          path="/"
+          element={
+            <Home
+              items={items}
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              onChangeSearchInput={onChangeSearchInput}
+              onAddToFavorite={onAddToFavorite}
+              onAddToCart={onAddToCart}
+              sneakers={Sneakers}
+            />
+          }
+        />
+
+        <Route path="/favorites" element={<Favorites favorites={favorites}/>}/>
         
-        <Route path="/favorites" element={<Favorites />}></Route>
       </Routes>
-      <Home
-        items={items}
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-        onChangeSearchInput={onChangeSearchInput}
-        onAddToFavorite={onAddToFavorite}
-        onAddToCart={onAddToCart}
-        Sneakers={Sneakers}
-      />
     </div>
   );
 };

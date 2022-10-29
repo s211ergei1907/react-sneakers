@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
-export const Header = ({ onClickCart }) => {
+export const Header = ({ onClickCart, sneakers = []}) => {
+  
   return (
     <header className="d-flex justify-between align-center p-40">
       <Link to="/">
@@ -21,7 +22,8 @@ export const Header = ({ onClickCart }) => {
             src="/img/card.svg"
             alt=""
           />
-          <span>1205 руб.</span>
+
+          <span> {sneakers.length > 0 && sneakers.reduce((acc, sneakersItem) => (acc +  Number(sneakersItem.price)), 0)}</span>
         </li>
         <li>
           <Link to="/favorites">

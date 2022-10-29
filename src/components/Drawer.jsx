@@ -17,7 +17,7 @@ export const Drawer = ({ onCloseCart, items = [], onRemove}) => {
           {items.map(({imageUrl, title, price, id}) => (
             <div className="cartItem d-flex align-center">
               <div className="cardItemImg">
-                <img style={{height: "70px", width: "70px"}} src={imageUrl} alt="sneak" />  
+                <img style={{height: "70px", width: "70px"}} src={imageUrl} alt="sneakers" />  
               </div>
               <div className="mr-20 flex">
                 <p className="mb-5">{title}</p>
@@ -38,12 +38,12 @@ export const Drawer = ({ onCloseCart, items = [], onRemove}) => {
             <li className="d-flex">
               <span>Итого: </span>
               <div></div>
-              <b>21498 руб.</b>
+              <b>{items.reduce((acc, {price}) => acc + Number(price), 0)} руб.</b>
             </li>
             <li className="d-flex">
               <span>Налог 5%</span>
               <div></div>
-              <b>1074 руб.</b>
+              <b>{items.reduce((acc, {price}) => acc + Number(price) , 0) * 0.05 } руб.</b>
             </li>
           </ul>
           <button className="greenButton">

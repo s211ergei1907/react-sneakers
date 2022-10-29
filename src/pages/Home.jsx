@@ -7,7 +7,7 @@ export const Home = ({
   onChangeSearchInput,
   onAddToFavorite,
   onAddToCart,
-  Sneakers,
+  sneakers: Sneakers,
 }) => {
   return (
     <div className="content p-40">
