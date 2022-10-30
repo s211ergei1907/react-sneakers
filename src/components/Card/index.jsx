@@ -3,9 +3,9 @@
 import { useState } from "react";
 import styles from "./Card.module.scss";
 
-export const Card = ({onFavorite, onPlus, imageUrl, title, price}) => {
+export const Card = ({id, onFavorite, onPlus, imageUrl, title, price, favorited = false}) => {
   const [isAdded, setIsAdded] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(favorited)
   const onClickPlus = () => {
     onPlus( {imageUrl, title, price});
     //Есть true будет false, если false будет true
@@ -13,7 +13,7 @@ export const Card = ({onFavorite, onPlus, imageUrl, title, price}) => {
   } 
 
   const onClickFavorite = () => {
-    onFavorite({imageUrl, title, price});
+    onFavorite({id, imageUrl, title, price});
     setIsFavorite(!isFavorite);
   } 
 

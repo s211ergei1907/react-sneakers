@@ -10,7 +10,7 @@ import { Home } from "./pages/Home";
 //4 урок пересмотреть
 export const App = () => {
   const [items, setItems] = useState([]);
-  const [сartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -45,21 +45,27 @@ export const App = () => {
   };
 
   const onAddToFavorite = async (sneakers) => {
-    await fetchApi.post("favorites", sneakers);
-    setFavorites((prev) => [...prev, sneakers]);
-  };
+    if (favorites.find(sneakersObj => sneakersObj.id === sneakers.id)){
+      await fetchApi.delete(`favorites/${sneakers.id}`);
+      setFavorites((prev) =>  [...prev.filter((item) => item.id !== sneakers.id)]);
+    }
+    else{
+      await fetchApi.post("favorites", sneakers);
+      setFavorites((prev) => [...prev, sneakers]);
+    }
+  };  
 
   return (
     <div className="wrapper clear">
       {cartOpened && (
         <Drawer
-          items={сartItems}
+          items={cartItems} 
           onCloseCart={() => setCartOpened(false)}
           onRemove={onRemoveItem}
         />
       )}
 
-      <Header sneakers={сartItems}
+      <Header sneakers={cartItems}
         onClickCart={() => setCartOpened(true)}
         
       />
@@ -80,7 +86,7 @@ export const App = () => {
           }
         />
 
-        <Route path="/favorites" element={<Favorites favorites={favorites}/>}/>
+        <Route path="/favorites" element={<Favorites favorites={favorites} onAddToFavorite={onAddToFavorite}/>}/>
         
       </Routes>
     </div>
