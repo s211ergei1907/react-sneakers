@@ -15,7 +15,7 @@ export const Drawer = ({ onCloseCart, items = [], onRemove}) => {
         <div className="items">
 
           {items.map(({imageUrl, title, price, id}) => (
-            <div className="cartItem d-flex align-center">
+            <div key={id} className="cartItem d-flex align-center">
               <div className="cardItemImg">
                 <img style={{height: "70px", width: "70px"}} src={imageUrl} alt="sneakers" />  
               </div>

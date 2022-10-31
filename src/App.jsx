@@ -31,8 +31,18 @@ export const App = () => {
   }, []);
 
   const onAddToCart = async (sneakers) => {
-    await fetchApi.post("cart", sneakers);
-    setCartItems((prev) => [...prev, sneakers]);
+    console.log(sneakers);
+    try {
+      if (cartItems.find((item) => Number(item.id) === Number(sneakers.id))) {
+        await fetchApi.delete(`cart/${sneakers.id}`);
+        setCartItems((prev) => prev.filter((item) => Number(item.id) !== Number(sneakers.id)));   //Берем предыдущие значение
+      }else{
+        await fetchApi.post("cart", sneakers);
+        setCartItems((prev) => [...prev, sneakers]);
+      }
+    } catch (error) {
+      alert("Не удалось добавить в корзину");
+    }
   };
 
   const onRemoveItem = async (id) => {
@@ -45,30 +55,28 @@ export const App = () => {
   };
 
   const onAddToFavorite = async (sneakers) => {
-    if (favorites.find(sneakersObj => sneakersObj.id === sneakers.id)){
+    if (favorites.find((sneakersObj) => sneakersObj.id === sneakers.id)) {
       await fetchApi.delete(`favorites/${sneakers.id}`);
-      setFavorites((prev) =>  [...prev.filter((item) => item.id !== sneakers.id)]);
-    }
-    else{
+      setFavorites((prev) => [
+        ...prev.filter((item) => item.id !== sneakers.id),
+      ]);
+    } else {
       await fetchApi.post("favorites", sneakers);
       setFavorites((prev) => [...prev, sneakers]);
     }
-  };  
+  };
 
   return (
     <div className="wrapper clear">
       {cartOpened && (
         <Drawer
-          items={cartItems} 
+          items={cartItems}
           onCloseCart={() => setCartOpened(false)}
           onRemove={onRemoveItem}
         />
       )}
 
-      <Header sneakers={cartItems}
-        onClickCart={() => setCartOpened(true)}
-        
-      />
+      <Header sneakers={cartItems} onClickCart={() => setCartOpened(true)} />
 
       <Routes>
         <Route
@@ -86,8 +94,15 @@ export const App = () => {
           }
         />
 
-        <Route path="/favorites" element={<Favorites favorites={favorites} onAddToFavorite={onAddToFavorite}/>}/>
-        
+        <Route
+          path="/favorites"
+          element={
+            <Favorites
+              favorites={favorites}
+              onAddToFavorite={onAddToFavorite}
+            />
+          }
+        />
       </Routes>
     </div>
   );

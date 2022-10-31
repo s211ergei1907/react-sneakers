@@ -1,4 +1,4 @@
-// !1::41 5 видос 
+// !1::41 6 видос 
 
 import { useState } from "react";
 import styles from "./Card.module.scss";
@@ -7,7 +7,7 @@ export const Card = ({id, onFavorite, onPlus, imageUrl, title, price, favorited 
   const [isAdded, setIsAdded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(favorited)
   const onClickPlus = () => {
-    onPlus( {imageUrl, title, price});
+    onPlus( {id, imageUrl, title, price});
     //Есть true будет false, если false будет true
     setIsAdded(!isAdded);
   } 
