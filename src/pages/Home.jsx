@@ -8,6 +8,7 @@ export const Home = ({
   onAddToFavorite,
   onAddToCart,
   sneakers: Sneakers,
+  cartItems
 }) => {
   return (
     <div className="content p-40">
@@ -39,6 +40,8 @@ export const Home = ({
         )}
         onAddToCart={onAddToCart}
         onAddToFavorite={onAddToFavorite}
+        cartItems={cartItems}
+        
       />
     </div>
   );

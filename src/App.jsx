@@ -17,14 +17,16 @@ export const App = () => {
 
   useEffect(() => {
     const getDataFromOnServer = async () => {
-      const result = await fetchApi.get("items");
-      setItems(result.data);
-
-      const cart = await fetchApi.get("cart");
-      setCartItems(cart.data);
-
-      const favorites = await fetchApi.get("favorites");
-      setFavorites(favorites.data);
+      async function fetchData() {
+        const cart = await fetchApi.get("cart");
+        const favorites = await fetchApi.get("favorites");
+        const result = await fetchApi.get("items");
+        setCartItems(cart.data);        
+        setFavorites(favorites.data);
+        setItems(result.data);
+ 
+      }
+      fetchData();
     };
 
     getDataFromOnServer();
@@ -84,6 +86,7 @@ export const App = () => {
           element={
             <Home
               items={items}
+              cartItems={cartItems}
               searchValue={searchValue}
               setSearchValue={setSearchValue}
               onChangeSearchInput={onChangeSearchInput}
