@@ -1,4 +1,5 @@
 import React from "react";
+import { Card } from "../components/Card";
 
 export const Home = ({
   items,
@@ -7,9 +8,23 @@ export const Home = ({
   onChangeSearchInput,
   onAddToFavorite,
   onAddToCart,
-  sneakers: Sneakers,
-  cartItems
+  isLoading
 }) => {
+
+ const renderItems = () => {
+    const filtredItems = items.filter((item) =>
+      item.title.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+    return (isLoading ? [...Array(8)] : filtredItems).map((item, index) => (
+      <Card
+        key={index}
+        onFavorite={(obj) => onAddToFavorite(obj)}
+        onPlus={(obj) => onAddToCart(obj)}
+        loading={isLoading}
+        {...item}
+      />
+    ));
+  };
   return (
     <div className="content p-40">
       <div className="d-flex align-center mb-40 justify-between">
@@ -34,15 +49,8 @@ export const Home = ({
         </div>
       </div>
 
-      <Sneakers
-        sneakers={items.filter(({ title }) =>
-          title.toLowerCase().includes(searchValue.toLowerCase())
-        )}
-        onAddToCart={onAddToCart}
-        onAddToFavorite={onAddToFavorite}
-        cartItems={cartItems}
-        
-      />
+      {renderItems()}
+
     </div>
   );
 };

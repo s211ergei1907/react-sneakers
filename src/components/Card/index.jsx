@@ -13,7 +13,7 @@ export const Card = ({
   price,
   favorited = false,
   added = false,
-  loading = true,
+  loading
 }) => {
   const [isAdded, setIsAdded] = useState(added);
   const [isFavorite, setIsFavorite] = useState(favorited);
@@ -49,7 +49,7 @@ export const Card = ({
           <rect x="117" y="130" rx="0" ry="0" width="32" height="32" />
         </ContentLoader>
       ) : (
-        <>
+        <div>
           <div className="favorite" onClick={onFavorite}>
             <img
               onClick={onClickFavorite}
@@ -79,7 +79,7 @@ export const Card = ({
               alt="Plus"
             />
           </div>
-        </>
+        </div>
       )}
       
     </div>

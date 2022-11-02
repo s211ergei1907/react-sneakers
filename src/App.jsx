@@ -1,7 +1,6 @@
 import { Drawer } from "./components/Drawer";
 import { Header } from "./components/Header";
 import { useState, useEffect } from "react";
-import { Sneakers } from "./components/Sneakers";
 import { fetchApi } from "./fetchApi/fetchApi";
 import { Routes, Route, Link } from "react-router-dom";
 import { Favorites } from "./pages/Favorites";
@@ -14,6 +13,8 @@ export const App = () => {
   const [favorites, setFavorites] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [isLoading, setIsLoading] = useState(true)
+
 
   useEffect(() => {
     const getDataFromOnServer = async () => {
@@ -21,10 +22,11 @@ export const App = () => {
         const cart = await fetchApi.get("cart");
         const favorites = await fetchApi.get("favorites");
         const result = await fetchApi.get("items");
-        setCartItems(cart.data);        
+
+        setIsLoading(false);                                                   //Перед отправкой запросов поставь setIsLoading(true)
+        setCartItems(cart.data);
         setFavorites(favorites.data);
         setItems(result.data);
- 
       }
       fetchData();
     };
@@ -37,8 +39,10 @@ export const App = () => {
     try {
       if (cartItems.find((item) => Number(item.id) === Number(sneakers.id))) {
         await fetchApi.delete(`cart/${sneakers.id}`);
-        setCartItems((prev) => prev.filter((item) => Number(item.id) !== Number(sneakers.id)));   //Берем предыдущие значение
-      }else{
+        setCartItems((prev) =>
+          prev.filter((item) => Number(item.id) !== Number(sneakers.id))
+        ); //Берем предыдущие значение
+      } else {
         await fetchApi.post("cart", sneakers);
         setCartItems((prev) => [...prev, sneakers]);
       }
@@ -92,7 +96,7 @@ export const App = () => {
               onChangeSearchInput={onChangeSearchInput}
               onAddToFavorite={onAddToFavorite}
               onAddToCart={onAddToCart}
-              sneakers={Sneakers}
+              isLoading={isLoading}
             />
           }
         />
