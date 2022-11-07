@@ -1,5 +1,7 @@
 import React from "react";
 import { Card } from "../components/Card";
+import { AppContext } from "../context";
+
 
 export const Home = ({
   items,
@@ -8,13 +10,14 @@ export const Home = ({
   onChangeSearchInput,
   onAddToFavorite,
   onAddToCart,
-  isLoading
+  isLoading,
 }) => {
 
- const renderItems = () => {
+  const renderItems = () => {
     const filtredItems = items.filter((item) =>
-      item.title.toLowerCase().includes(searchValue.toLowerCase()),
+      item.title.toLowerCase().includes(searchValue.toLowerCase())
     );
+
     return (isLoading ? [...Array(8)] : filtredItems).map((item, index) => (
       <Card
         key={index}
@@ -22,9 +25,11 @@ export const Home = ({
         onPlus={(obj) => onAddToCart(obj)}
         loading={isLoading}
         {...item}
+        // added={isItemAdded(item && item.id)}
       />
     ));
   };
+
   return (
     <div className="content p-40">
       <div className="d-flex align-center mb-40 justify-between">
@@ -50,7 +55,6 @@ export const Home = ({
       </div>
 
       {renderItems()}
-
     </div>
   );
 };

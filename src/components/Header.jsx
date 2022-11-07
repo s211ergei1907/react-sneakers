@@ -32,7 +32,7 @@ export const Header = ({ onClickCart, sneakers = []}) => {
         </li>
         <li className="cu-p">
           <img
-            classname="ml-10 cu-p"
+            className="ml-10 cu-p"
             width={18}
             height={18}
             src="/img/user.svg"

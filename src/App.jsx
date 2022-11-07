@@ -1,20 +1,24 @@
 import { Drawer } from "./components/Drawer";
 import { Header } from "./components/Header";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { fetchApi } from "./fetchApi/fetchApi";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Favorites } from "./pages/Favorites";
 import { Home } from "./pages/Home";
+import {AppContext} from "./context";
 
-//4 урок пересмотреть
+
+//передаем в компонету 2 строки qwiestion и answer в answer правильный ответ, моя компонента разобьет на слова перемешает
+//* Реализовать чтобы показывала с каокго слова неправильно пошло предложение 
+
+
 export const App = () => {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState([]); 
   const [cartItems, setCartItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [cartOpened, setCartOpened] = useState(false);
+  const [cartOpened, setCartOpened] = useState(false);  
   const [searchValue, setSearchValue] = useState("");
-  const [isLoading, setIsLoading] = useState(true)
-
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getDataFromOnServer = async () => {
@@ -23,7 +27,7 @@ export const App = () => {
         const favorites = await fetchApi.get("favorites");
         const result = await fetchApi.get("items");
 
-        setIsLoading(false);                                                   //Перед отправкой запросов поставь setIsLoading(true)
+        setIsLoading(false); //Перед отправкой запросов поставь setIsLoading(true)
         setCartItems(cart.data);
         setFavorites(favorites.data);
         setItems(result.data);
@@ -72,45 +76,50 @@ export const App = () => {
     }
   };
 
+  const isItemAdded = (id) => {
+    return cartItems.some((obj) => Number(obj.id) === Number(id))
+  }
+
   return (
-    <div className="wrapper clear">
-      {cartOpened && (
-        <Drawer
-          items={cartItems}
-          onCloseCart={() => setCartOpened(false)}
-          onRemove={onRemoveItem}
-        />
-      )}
+    //  Теперь эти переменные доступны в компонентах: Drawer, Header, Home, Favorites  и нам теперь не нужна прокидывать их в пропсы
+    <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite}}>   
+      <div className="wrapper clear">
+        {cartOpened && (
+          <Drawer
+            items={cartItems}
+            onCloseCart={() => setCartOpened(false)}
+            onRemove={onRemoveItem}
+          />
+        )}
 
-      <Header sneakers={cartItems} onClickCart={() => setCartOpened(true)} />
+        <Header sneakers={cartItems} onClickCart={() => setCartOpened(true)} />
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              items={items}
-              cartItems={cartItems}
-              searchValue={searchValue}
-              setSearchValue={setSearchValue}
-              onChangeSearchInput={onChangeSearchInput}
-              onAddToFavorite={onAddToFavorite}
-              onAddToCart={onAddToCart}
-              isLoading={isLoading}
-            />
-          }
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                items={items}
+                cartItems={cartItems}
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
+                onChangeSearchInput={onChangeSearchInput}
+                onAddToFavorite={onAddToFavorite}
+                onAddToCart={onAddToCart}
+                isLoading={isLoading}
+                
+              />
+            }
+          />
 
-        <Route
-          path="/favorites"
-          element={
-            <Favorites
-              favorites={favorites}
-              onAddToFavorite={onAddToFavorite}
-            />
-          }
-        />
-      </Routes>
-    </div>
+          <Route
+            path="/favorites"
+            element={
+              <Favorites/>
+            }
+          />
+        </Routes>
+      </div>
+    </AppContext.Provider>
   );
 };
