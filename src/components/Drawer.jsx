@@ -1,3 +1,5 @@
+import { Info } from "./Info";
+
 export const Drawer = ({ onCloseCart, items = [], onRemove}) => {
   return (
     <div className="overlay">
@@ -11,9 +13,9 @@ export const Drawer = ({ onCloseCart, items = [], onRemove}) => {
             alt="remove"
           />
         </h2>
-        {/* //url(${obj.imageUrl}) */}
-        <div className="items">
-
+        {items.length > 0 ? (
+          <div>
+             <div className="items">
           {items.map(({imageUrl, title, price, id}) => (
             <div key={id} className="cartItem d-flex align-center">
               <div className="cardItemImg">
@@ -50,7 +52,18 @@ export const Drawer = ({ onCloseCart, items = [], onRemove}) => {
             Оформить заказ <img src="/img/arrow.svg" alt="arrow" />
           </button>
         </div>
+          </div>
+       ) : (
+            <Info title="Корзина пустая" description="Добавьте хотя бы одну пару кроссовок" image={'/img/empty-cart.jpg'}/> 
+        )
+        }
       </div>
+    
     </div>
+
+
   );
 };
+
+
+// 5 урок

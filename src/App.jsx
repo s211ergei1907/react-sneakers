@@ -65,7 +65,7 @@ export const App = () => {
   };
 
   const onAddToFavorite = async (sneakers) => {
-    if (favorites.find((sneakersObj) => sneakersObj.id === sneakers.id)) {
+    if (favorites.find((sneakersObj) => Number(sneakersObj.id) === Number(sneakers.id))) {
       await fetchApi.delete(`favorites/${sneakers.id}`);
       setFavorites((prev) => [
         ...prev.filter((item) => item.id !== sneakers.id),
@@ -82,7 +82,7 @@ export const App = () => {
 
   return (
     //  Теперь эти переменные доступны в компонентах: Drawer, Header, Home, Favorites  и нам теперь не нужна прокидывать их в пропсы
-    <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite}}>   
+    <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite, setCartOpened}}>   
       <div className="wrapper clear">
         {cartOpened && (
           <Drawer

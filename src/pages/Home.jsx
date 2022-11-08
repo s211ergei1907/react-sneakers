@@ -2,7 +2,6 @@ import React from "react";
 import { Card } from "../components/Card";
 import { AppContext } from "../context";
 
-
 export const Home = ({
   items,
   searchValue,
@@ -12,7 +11,6 @@ export const Home = ({
   onAddToCart,
   isLoading,
 }) => {
-
   const renderItems = () => {
     const filtredItems = items.filter((item) =>
       item.title.toLowerCase().includes(searchValue.toLowerCase())
@@ -53,8 +51,9 @@ export const Home = ({
           )}
         </div>
       </div>
-
-      {renderItems()}
+      <div className="cart">
+        {renderItems()}
+      </div>
     </div>
   );
 };
