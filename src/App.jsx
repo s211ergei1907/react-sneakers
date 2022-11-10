@@ -82,7 +82,7 @@ export const App = () => {
 
   return (
     //  Теперь эти переменные доступны в компонентах: Drawer, Header, Home, Favorites  и нам теперь не нужна прокидывать их в пропсы
-    <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite, setCartOpened}}>   
+    <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite, setCartOpened, setCartItems}}>   
       <div className="wrapper clear">
         {cartOpened && (
           <Drawer
