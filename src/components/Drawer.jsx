@@ -8,13 +8,19 @@ import { fetchApi } from "../fetchApi/fetchApi";
 
 export const Drawer = ({ onCloseCart, items = [], onRemove }) => {
   const [isOrderComplete, setIsOrderComplete] = useState(false);
-
+  const [orderId, setOrderId] = useState(null); 
   const { cartItems, setCartItems } = useContext(AppContext);
 
   const onClickOrder = async () => {
-    await fetchApi.post("order", cartItems);
-    setIsOrderComplete(true);
-    setCartItems([]);
+    try {
+      const {data} = await fetchApi.post("order", cartItems);
+      setOrderId(data.id);
+      setIsOrderComplete(true);
+      setCartItems([]);
+    } catch (error) {
+      alert("Не удалось создать заказ!")
+    }
+   
   };
   return (
     <div className="overlay">
@@ -84,7 +90,7 @@ export const Drawer = ({ onCloseCart, items = [], onRemove }) => {
             title={isOrderComplete ? "Заказ оформлен" : "Корзина пустая"}
             description={
               isOrderComplete
-                ? "Ваш заказ скоро будет передан курьерской доставки"
+                ? `Ваш заказ ${orderId} скоро будет передан курьерской доставки`
                 : "Добавьте хоть один товар пожалуйста"
             }
             image={
