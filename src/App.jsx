@@ -5,18 +5,14 @@ import { fetchApi } from "./fetchApi/fetchApi";
 import { Routes, Route } from "react-router-dom";
 import { Favorites } from "./pages/Favorites";
 import { Home } from "./pages/Home";
-import {AppContext} from "./context";
-
-
-//передаем в компонету 2 строки qwiestion и answer в answer правильный ответ, моя компонента разобьет на слова перемешает
-//* Реализовать чтобы показывала с каокго слова неправильно пошло предложение 
-
+import { AppContext } from "./context";
+import { Orders } from "./pages/Orders";
 
 export const App = () => {
-  const [items, setItems] = useState([]); 
+  const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [cartOpened, setCartOpened] = useState(false);  
+  const [cartOpened, setCartOpened] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -65,7 +61,11 @@ export const App = () => {
   };
 
   const onAddToFavorite = async (sneakers) => {
-    if (favorites.find((sneakersObj) => Number(sneakersObj.id) === Number(sneakers.id))) {
+    if (
+      favorites.find(
+        (sneakersObj) => Number(sneakersObj.id) === Number(sneakers.id)
+      )
+    ) {
       await fetchApi.delete(`favorites/${sneakers.id}`);
       setFavorites((prev) => [
         ...prev.filter((item) => item.id !== sneakers.id),
@@ -77,12 +77,22 @@ export const App = () => {
   };
 
   const isItemAdded = (id) => {
-    return cartItems.some((obj) => Number(obj.id) === Number(id))
-  }
+    return cartItems.some((obj) => Number(obj.id) === Number(id));
+  };
 
   return (
     //  Теперь эти переменные доступны в компонентах: Drawer, Header, Home, Favorites  и нам теперь не нужна прокидывать их в пропсы
-    <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite, setCartOpened, setCartItems}}>   
+    <AppContext.Provider
+      value={{
+        items,
+        cartItems,
+        favorites,
+        isItemAdded,
+        onAddToFavorite,
+        setCartOpened,
+        setCartItems,
+      }}
+    >
       <div className="wrapper clear">
         {cartOpened && (
           <Drawer
@@ -107,17 +117,13 @@ export const App = () => {
                 onAddToFavorite={onAddToFavorite}
                 onAddToCart={onAddToCart}
                 isLoading={isLoading}
-                
               />
             }
           />
 
-          <Route
-            path="/favorites"
-            element={
-              <Favorites/>
-            }
-          />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/orders" element={<Orders />} />
+           
         </Routes>
       </div>
     </AppContext.Provider>

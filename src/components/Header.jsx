@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
-export const Header = ({ onClickCart, sneakers = []}) => {
-  
+export const Header = ({ onClickCart, sneakers = [] }) => {
   return (
     <header className="d-flex justify-between align-center p-40">
       <Link to="/">
@@ -23,7 +22,14 @@ export const Header = ({ onClickCart, sneakers = []}) => {
             alt=""
           />
 
-          <span> {sneakers.length > 0 && sneakers.reduce((acc, sneakersItem) => (acc +  Number(sneakersItem.price)), 0)}</span>
+          <span>
+            {" "}
+            {sneakers.length > 0 &&
+              sneakers.reduce(
+                (acc, sneakersItem) => acc + Number(sneakersItem.price),
+                0
+              )}
+          </span>
         </li>
         <li>
           <Link to="/favorites">
@@ -31,13 +37,15 @@ export const Header = ({ onClickCart, sneakers = []}) => {
           </Link>
         </li>
         <li className="cu-p">
-          <img
-            className="ml-10 cu-p"
-            width={18}
-            height={18}
-            src="/img/user.svg"
-            alt="user"
-          />
+          <Link to="/orders">
+            <img
+              className="ml-10 cu-p"
+              width={18}
+              height={18}
+              src="/img/user.svg"
+              alt="user"
+            />  
+          </Link>
         </li>
       </ul>
     </header>
