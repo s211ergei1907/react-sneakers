@@ -91,6 +91,7 @@ export const App = () => {
         onAddToFavorite,
         setCartOpened,
         setCartItems,
+        onAddToCart
       }}
     >
       <div className="wrapper clear">

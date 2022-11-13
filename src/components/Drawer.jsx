@@ -13,7 +13,9 @@ export const Drawer = ({ onCloseCart, items = [], onRemove }) => {
 
   const onClickOrder = async () => {
     try {
-      const {data} = await fetchApi.post("order", cartItems);
+      const { data } = await fetchApi.post('/order', {
+        items: cartItems,
+      });
       setOrderId(data.id);
       setIsOrderComplete(true);
       setCartItems([]);
@@ -22,6 +24,7 @@ export const Drawer = ({ onCloseCart, items = [], onRemove }) => {
     }
    
   };
+  
   return (
     <div className="overlay">
       <div className="drawer">
