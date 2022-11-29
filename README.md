@@ -1,4 +1,4 @@
-#How to choose sneakers for everyday walking
+# How to choose sneakers for everyday walking
 
 Sneakers have long ceased to be just shoes for playing sports. The daily rhythm of life is conducive to walking several kilometers. Fans of long walks should take care of the quality and convenience of the purchased shoes. How to choose the right shoes for everyday walking?
 
